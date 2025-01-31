@@ -1,6 +1,6 @@
 class RingGame {
     constructor() {
-        this.questions = [
+        this.questions = this.shuffleArray([
             // Cultura Chinesa
             { culture: 'Chinês', symbol: '道', finger: 'thumb', meaning: 'Tao - Caminho Espiritual' },
             { culture: 'Chinês', symbol: '陰陽', finger: 'index', meaning: 'Equilíbrio e Dualidade' },
@@ -56,28 +56,28 @@ class RingGame {
             { culture: 'Grego', symbol: '🏛', finger: 'middle', meaning: 'Coluna - Estrutura e Conhecimento' },
             { culture: 'Grego', symbol: '⚖', finger: 'ring', meaning: 'Balança - Justiça e Equilíbrio' },
             { culture: 'Grego', symbol: '🔥', finger: 'pinky', meaning: 'Fogo Olímpico - Espírito e Determinação' }
-        ];
+        ]);
 
         this.currentQuestion = 0;
         this.score = 0;
+        this.streak = 0;
         this.activeStone = null;
         this.init();
+    }
+
+    shuffleArray(array) {
+        return array.sort(() => Math.random() - 0.5);
     }
 
     init() {
         document.getElementById('start-btn').addEventListener('click', () => this.startGame());
         
-        // Configurar slots
         document.querySelectorAll('.ring-slot').forEach(slot => {
-            // Eventos mouse
             slot.addEventListener('dragover', e => e.preventDefault());
             slot.addEventListener('drop', e => this.handleDrop(e));
-            
-            // Eventos touch
             slot.addEventListener('touchstart', e => this.handleTouchPlace(e));
         });
 
-        // Prevenir zoom
         document.addEventListener('touchstart', e => {
             if (e.touches.length > 1) e.preventDefault();
         }, { passive: false });
@@ -94,10 +94,11 @@ class RingGame {
         if (correctFinger === targetFinger) {
             this.handleCorrect(slot);
         } else {
+            slot.classList.add('incorrect');
+            setTimeout(() => slot.classList.remove('incorrect'), 500);
             this.handleIncorrect();
         }
         
-        // Resetar pedra ativa
         this.activeStone.classList.remove('active');
         this.activeStone = null;
     }
@@ -122,12 +123,10 @@ class RingGame {
         stone.draggable = true;
         stone.dataset.finger = question.finger;
         
-        // Eventos mouse
         stone.addEventListener('dragstart', e => {
             e.dataTransfer.setData('text/plain', question.finger);
         });
 
-        // Eventos touch
         stone.addEventListener('touchstart', e => {
             e.preventDefault();
             if (this.activeStone) this.activeStone.classList.remove('active');
@@ -136,6 +135,16 @@ class RingGame {
         });
 
         symbolsContainer.appendChild(stone);
+        symbolsContainer.addEventListener('touchmove', e => this.handleTouchMove(e));
+        symbolsContainer.addEventListener('touchend', () => this.activeStone = null);
+    }
+
+    handleTouchMove(e) {
+        if (!this.activeStone) return;
+        const touch = e.touches[0];
+        this.activeStone.style.position = 'absolute';
+        this.activeStone.style.left = `${touch.clientX - 25}px`;
+        this.activeStone.style.top = `${touch.clientY - 25}px`;
     }
 
     handleDrop(e) {
@@ -146,17 +155,27 @@ class RingGame {
         if (correctFinger === targetFinger) {
             this.handleCorrect(e.target.closest('.ring-slot'));
         } else {
+            e.target.closest('.ring-slot').classList.add('incorrect');
+            setTimeout(() => e.target.closest('.ring-slot').classList.remove('incorrect'), 500);
             this.handleIncorrect();
         }
     }
 
     handleCorrect(slot) {
-        slot.classList.add('correct');
-        this.score += 100;
+        this.streak++;
+        const bonus = Math.min(this.streak * 20, 100);
+        this.score += 100 + bonus;
         document.querySelector('#score span').textContent = this.score;
+        
+        document.getElementById('progress-bar').style.width = 
+            `${(this.currentQuestion / this.questions.length) * 100}%`;
+
+        slot.classList.add('correct');
+        this.activeStone?.classList.add('correct');
 
         setTimeout(() => {
             slot.classList.remove('correct');
+            this.activeStone?.classList.remove('correct');
             this.currentQuestion++;
             
             if (this.currentQuestion < this.questions.length) {
@@ -168,12 +187,17 @@ class RingGame {
     }
 
     handleIncorrect() {
-        alert('Esta não é a posição correta! Tente novamente.');
+        this.streak = 0;
         this.score = Math.max(0, this.score - 50);
         document.querySelector('#score span').textContent = this.score;
     }
 
     endGame() {
+        const highScore = localStorage.getItem('highScore') || 0;
+        if (this.score > highScore) {
+            localStorage.setItem('highScore', this.score);
+        }
+
         document.getElementById('question-panel').classList.add('hidden');
         const resultPanel = document.getElementById('result-panel');
         resultPanel.classList.remove('hidden');
@@ -181,7 +205,7 @@ class RingGame {
         document.getElementById('result-title').textContent = 
             `Jornada Concluída! Pontuação Final: ${this.score}`;
         document.getElementById('result-message').textContent = 
-            'Você dominou os segredos dos anéis ancestrais!';
+            `Recorde: ${localStorage.getItem('highScore') || 0} | Sua Pontuação: ${this.score}`;
     }
 }
 
