@@ -503,5 +503,29 @@ body {
 .hidden {
     display: none;
 }
+.symbol-stone.active {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(212, 177, 146, 0.5);
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.ring-slot.correct {
+    animation: pulseCorrect 0.5s ease;
+    background: rgba(212, 177, 146, 0.3);
+}
+
+@keyframes pulseCorrect {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@media (hover: none) {
+    .ring-slot:hover {
+        background: transparent;
+        transform: none;
+    }
+}
 
 /* Restante do CSS do jogo mantido com ajustes de cores */
