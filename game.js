@@ -35,15 +35,48 @@ class RingGame {
 
         this.currentQuestion = 0;
         this.score = 0;
+        this.selectedFinger = null;
+        this.touchStartX = 0;
+        this.touchStartY = 0;
         this.init();
     }
 
     init() {
         document.getElementById('start-btn').addEventListener('click', () => this.startGame());
-        document.querySelectorAll('.ring-slot').forEach(slot => {
+        const slots = document.querySelectorAll('.ring-slot');
+        
+        slots.forEach(slot => {
+            // Eventos mouse
             slot.addEventListener('dragover', e => e.preventDefault());
             slot.addEventListener('drop', e => this.handleDrop(e));
+            
+            // Eventos touch
+            slot.addEventListener('touchstart', e => this.handleTouchStart(e));
+            slot.addEventListener('touchend', e => this.handleTouchEnd(e));
         });
+    }
+
+    handleTouchStart(e) {
+        this.touchStartX = e.touches[0].clientX;
+        this.touchStartY = e.touches[0].clientY;
+    }
+
+    handleTouchEnd(e) {
+        const dx = Math.abs(e.changedTouches[0].clientX - this.touchStartX);
+        const dy = Math.abs(e.changedTouches[0].clientY - this.touchStartY);
+        
+        if (dx < 10 && dy < 10) { // Considera apenas toques, não deslizes
+            const targetFinger = e.target.closest('.ring-slot').dataset.finger;
+            if (this.selectedFinger) {
+                if (this.selectedFinger === targetFinger) {
+                    this.handleCorrect(e.target.closest('.ring-slot'));
+                } else {
+                    this.handleIncorrect();
+                }
+                this.selectedFinger = null;
+                document.querySelectorAll('.symbol-stone').forEach(s => s.classList.remove('active'));
+            }
+        }
     }
 
     startGame() {
@@ -64,20 +97,31 @@ class RingGame {
         stone.className = 'symbol-stone';
         stone.textContent = question.symbol;
         stone.draggable = true;
+        
+        // Eventos mouse
         stone.addEventListener('dragstart', e => {
             e.dataTransfer.setData('text/plain', question.finger);
         });
 
+        // Eventos touch
+        stone.addEventListener('touchstart', e => {
+            e.preventDefault();
+            this.selectedFinger = question.finger;
+            stone.classList.add('active');
+        });
+
+        stone.addEventListener('touchend', e => e.preventDefault());
+        
         symbolsContainer.appendChild(stone);
     }
 
     handleDrop(e) {
         e.preventDefault();
         const correctFinger = e.dataTransfer.getData('text/plain');
-        const targetFinger = e.target.dataset.finger;
+        const targetFinger = e.target.closest('.ring-slot').dataset.finger;
 
         if (correctFinger === targetFinger) {
-            this.handleCorrect(e.target);
+            this.handleCorrect(e.target.closest('.ring-slot'));
         } else {
             this.handleIncorrect();
         }
@@ -118,7 +162,6 @@ class RingGame {
     }
 }
 
-// Inicialização do jogo
 document.addEventListener('DOMContentLoaded', () => {
     const game = new RingGame();
     document.getElementById('restart-btn').addEventListener('click', () => {
