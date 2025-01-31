@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anéis da Sabedoria</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="menu" aria-label="Menu de navegação">
+        <ul class="menu-list">
+            <li><a href="https://alexxanorafa.github.io/Tempo_e_Sonhos/" class="menu-item">Tempo e Sonhos</a></li>
+            <li><a href="https://alexxanorafa.github.io/posicionamentodosastros/" class="menu-item">Mapa Astral</a></li>
+            <li><a href="https://alexxanorafa.github.io/TarodeMarselha/" class="menu-item">Tarô de Marselha</a></li>
+            <li><a href="https://alexxanorafa.github.io/Runas-do-Destino/" class="menu-item">Runas do Destino</a></li>
+            <li><a href="https://alexxanorafa.github.io/O-Construtor-do-Destino/" class="menu-item">Construtor do Destino</a></li>
+            <li><a href="https://alexxanorafa.github.io/Tabuleiro-Quantico/" class="menu-item">Tabuleiro Quântico</a></li>
+        </ul>
+    </nav>
+
+    <div id="game-container">
+        <div id="question-panel" class="panel hidden">
+            <h2 id="current-question"></h2>
+            <div id="symbols-container"></div>
+        </div>
+
+        <div id="hands-wrapper">
+            <div class="hand-container">
+                <div class="hand-art"></div>
+                <div class="ring-slot" data-finger="thumb"></div>
+                <div class="ring-slot" data-finger="index"></div>
+                <div class="ring-slot" data-finger="middle"></div>
+                <div class="ring-slot" data-finger="ring"></div>
+                <div class="ring-slot" data-finger="pinky"></div>
+            </div>
+        </div>
+
+        <div id="controls">
+            <button id="start-btn" class="btn">Iniciar Jornada</button>
+            <div id="score">Pontuação: <span>0</span></div>
+        </div>
+
+        <div id="result-panel" class="panel hidden">
+            <h2 id="result-title"></h2>
+            <p id="result-message"></p>
+            <button id="restart-btn" class="btn">Jogar Novamente</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
