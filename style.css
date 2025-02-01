@@ -144,11 +144,11 @@ body {
     75% { transform: translateX(10px); }
 }
 
-.ring-slot[data-finger="thumb"] { left: 15%; top: 30%; }
-.ring-slot[data-finger="index"] { left: 35%; top: 25%; }
-.ring-slot[data-finger="middle"] { left: 50%; top: 20%; }
-.ring-slot[data-finger="ring"] { left: 65%; top: 25%; }
-.ring-slot[data-finger="pinky"] { left: 80%; top: 30%; }
+.ring-slot[data-finger="polegar"] { left: 15%; top: 30%; }
+.ring-slot[data-finger="indicador"] { left: 35%; top: 25%; }
+.ring-slot[data-finger="médio"] { left: 50%; top: 20%; }
+.ring-slot[data-finger="anelar"] { left: 65%; top: 25%; }
+.ring-slot[data-finger="mindinho"] { left: 80%; top: 30%; }
 
 .symbol-stone {
     width: 50px;
