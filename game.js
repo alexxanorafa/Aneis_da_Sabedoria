@@ -86,22 +86,19 @@ class RingGame {
     }
 
     handleSlotClick(e) {
-        if (!this.activeStone) return;
-        
         const slot = e.target.closest('.ring-slot');
-        const correctFinger = this.activeStone.dataset.finger;
-        const targetFinger = slot.dataset.finger;
+        if (!slot) return;
+        
+        const currentFinger = this.questions[this.currentQuestion].finger;
+        const selectedFinger = slot.dataset.finger;
 
-        if (correctFinger === targetFinger) {
+        if (selectedFinger === currentFinger) {
             this.handleCorrect(slot);
         } else {
             slot.classList.add('incorrect');
             setTimeout(() => slot.classList.remove('incorrect'), 500);
             this.handleIncorrect();
         }
-        
-        this.activeStone.classList.remove('active');
-        this.activeStone = null;
     }
 
     startGame() {
