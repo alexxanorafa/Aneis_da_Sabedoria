@@ -1,255 +1,186 @@
-:root {
-    --primary-color: #2c3e50;
-    --secondary-color: #d4b192;
-    --background: linear-gradient(45deg, #1a1a1a, #2c3e50);
-    --mystic-glow: rgba(212, 177, 146, 0.3);
-    --text-color: #ecf0f1;
-}
+class RingGame {
+    constructor() {
+        this.questions = this.shuffleArray([
+            // Cultura Chinesa
+            { culture: 'Chinês', symbol: '道', finger: 'polegar', meaning: 'Tao - Caminho Espiritual' },
+            { culture: 'Chinês', symbol: '陰陽', finger: 'indicador', meaning: 'Equilíbrio e Dualidade' },
+            { culture: 'Chinês', symbol: '龍', finger: 'médio', meaning: 'Dragão - Poder e Sabedoria' },
+            { culture: 'Chinês', symbol: '福', finger: 'anelar', meaning: 'Felicidade e Sorte' },
+            { culture: 'Chinês', symbol: '壽', finger: 'mindinho', meaning: 'Longevidade e Saúde' },
 
-body {
-    font-family: 'Times New Roman', serif;
-    background: var(--background);
-    color: var(--secondary-color);
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-}
+            // Cultura Nórdica
+            { culture: 'Nórdico', symbol: 'ᚦ', finger: 'polegar', meaning: 'Thurisaz - Proteção Divina' },
+            { culture: 'Nórdico', symbol: 'ᚠ', finger: 'indicador', meaning: 'Fehu - Riqueza e Prosperidade' },
+            { culture: 'Nórdico', symbol: 'ᛟ', finger: 'médio', meaning: 'Othala - Herança e Família' },
+            { culture: 'Nórdico', symbol: 'ᛏ', finger: 'anelar', meaning: 'Tiwaz - Justiça e Coragem' },
+            { culture: 'Nórdico', symbol: 'ᚨ', finger: 'mindinho', meaning: 'Ansuz - Comunicação e Sabedoria' },
 
-.menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 10px 0;
-    background: transparent;
-    position: relative;
-    z-index: 200;
-}
+            // Cultura Cigana
+            { culture: 'Cigano', symbol: '☾', finger: 'polegar', meaning: 'Lua - Intuição e Mistério' },
+            { culture: 'Cigano', symbol: '🔥', finger: 'indicador', meaning: 'Fogo - Paixão e Transformação' },
+            { culture: 'Cigano', symbol: '🔮', finger: 'médio', meaning: 'Cristal - Profecia e Destino' },
+            { culture: 'Cigano', symbol: '🧿', finger: 'anelar', meaning: 'Olho Místico - Proteção contra o mal' },
+            { culture: 'Cigano', symbol: '🎵', finger: 'mindinho', meaning: 'Música - Liberdade e Expressão' },
 
-.menu-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+            // Cultura Tibetana
+            { culture: 'Tibetano', symbol: '卍', finger: 'polegar', meaning: 'Eternidade e Harmonia' },
+            { culture: 'Tibetano', symbol: 'ॐ', finger: 'indicador', meaning: 'Om - Consciência Cósmica' },
+            { culture: 'Tibetano', symbol: 'ཨ', finger: 'médio', meaning: 'Sagrado A - Energia Criativa' },
+            { culture: 'Tibetano', symbol: 'ཀི', finger: 'anelar', meaning: 'Kī - Poder Espiritual' },
+            { culture: 'Tibetano', symbol: 'དངོས', finger: 'mindinho', meaning: 'Realidade Suprema' },
 
-.menu-item {
-    background-color: transparent;
-    border-radius: 4px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: var(--text-color);
-    font-size: 0.9em;
-    padding: 0 8px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s ease;
-}
+            // Cultura Havaiana
+            { culture: 'Havaiano', symbol: '🌋', finger: 'polegar', meaning: 'Pele - Energia Vulcânica' },
+            { culture: 'Havaiano', symbol: '🌊', finger: 'indicador', meaning: 'Kanaloa - Fluxo e Sabedoria' },
+            { culture: 'Havaiano', symbol: '🌿', finger: 'médio', meaning: 'Lono - Paz e Fertilidade' },
+            { culture: 'Havaiano', symbol: '🔥', finger: 'anelar', meaning: 'Kāne - Força Criativa' },
+            { culture: 'Havaiano', symbol: '🌺', finger: 'mindinho', meaning: 'Aloha - Amor e União' },
 
-.menu-item:hover {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    transform: translateY(-2px);
-}
+            // Cultura Celta
+            { culture: 'Celta', symbol: '☘', finger: 'polegar', meaning: 'Triskelion - Movimento e Crescimento' },
+            { culture: 'Celta', symbol: '🌳', finger: 'indicador', meaning: 'Árvore Sagrada - Conexão com a Natureza' },
+            { culture: 'Celta', symbol: '🌀', finger: 'médio', meaning: 'Espiral - Evolução e Transformação' },
+            { culture: 'Celta', symbol: '⚔', finger: 'anelar', meaning: 'Espada - Coragem e Proteção' },
+            { culture: 'Celta', symbol: '🔗', finger: 'mindinho', meaning: 'Nós Celtas - Laços e Destino' },
 
-.menu-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: var(--secondary-color);
-    transition: all 0.3s ease;
-}
+            // Cultura Egípcia
+            { culture: 'Egípcio', symbol: '𓂀', finger: 'polegar', meaning: 'Olho de Hórus - Proteção e Visão' },
+            { culture: 'Egípcio', symbol: '𓆣', finger: 'indicador', meaning: 'Ankh - Vida e Imortalidade' },
+            { culture: 'Egípcio', symbol: '𓏏', finger: 'médio', meaning: 'Djed - Estabilidade e Força' },
+            { culture: 'Egípcio', symbol: '𓂻', finger: 'anelar', meaning: 'Escaravelho - Renascimento e Transformação' },
+            { culture: 'Egípcio', symbol: '𓃭', finger: 'mindinho', meaning: 'Leão - Poder e Liderança' },
 
-.menu-item:hover::after {
-    width: 100%;
-    left: 0;
-}
+            // Cultura Grega
+            { culture: 'Grego', symbol: 'Δ', finger: 'polegar', meaning: 'Delta - Mudança e Evolução' },
+            { culture: 'Grego', symbol: 'Ω', finger: 'indicador', meaning: 'Ômega - Plenitude e Fim' },
+            { culture: 'Grego', symbol: '🏛', finger: 'médio', meaning: 'Coluna - Estrutura e Conhecimento' },
+            { culture: 'Grego', symbol: '⚖', finger: 'anelar', meaning: 'Balança - Justiça e Equilíbrio' },
+            { culture: 'Grego', symbol: '🔥', finger: 'mindinho', meaning: 'Fogo Olímpico - Espírito e Determinação' }
 
-#game-container {
-    position: relative;
-    min-height: 80vh;
-    margin-top: 20px;
-}
+        ]);
 
-.hand-container {
-    position: relative;
-    width: 300px;
-    height: 400px;
-    margin: 50px auto;
-    background: transparent;
-}
-
-.ring-slot {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border: 2px dashed var(--secondary-color);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.ring-slot::after {
-    content: attr(data-finger);
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--secondary-color);
-    font-size: 0.8em;
-    text-transform: capitalize;
-}
-
-#progress {
-    width: 200px;
-    height: 5px;
-    background: rgba(212, 177, 146, 0.2);
-    margin: 10px auto;
-    border-radius: 3px;
-}
-
-#progress-bar {
-    height: 100%;
-    width: 0%;
-    background: var(--secondary-color);
-    transition: width 0.5s ease;
-}
-
-.symbol-stone.correct {
-    animation: explode 0.5s ease-out forwards;
-}
-
-.ring-slot.incorrect {
-    animation: shake 0.3s ease;
-}
-
-@keyframes explode {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(3); opacity: 0; }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
-}
-
-.ring-slot[data-finger="polegar"] { left: 15%; top: 30%; }
-.ring-slot[data-finger="indicador"] { left: 35%; top: 25%; }
-.ring-slot[data-finger="médio"] { left: 50%; top: 20%; }
-.ring-slot[data-finger="anelar"] { left: 65%; top: 25%; }
-.ring-slot[data-finger="mindinho"] { left: 80%; top: 30%; }
-
-.symbol-stone {
-    width: 50px;
-    height: 50px;
-    background: var(--primary-color);
-    border: 2px solid var(--secondary-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8em;
-    cursor: pointer;
-    touch-action: manipulation;
-    user-select: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--mystic-glow);
-}
-
-.symbol-stone.active {
-    transform: scale(1.3);
-    filter: drop-shadow(0 0 15px var(--secondary-color));
-    z-index: 1000;
-}
-
-#question-panel {
-    position: relative;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(44, 62, 80, 0.9);
-    padding: 15px;
-    border-radius: 10px;
-    max-width: 50%;
-    z-index: 50;
-}
-
-.btn {
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    border: 2px solid var(--secondary-color);
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    background: var(--secondary-color);
-    color: var(--primary-color);
-}
-
-.correct {
-    animation: pulse 0.5s ease;
-    background: var(--mystic-glow) !important;
-}
-
-.hidden {
-    display: none;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-@media (max-width: 768px) {
-    .hand-container {
-        transform: scale(1.3);
-        margin: 100px auto;
+        this.currentQuestion = 0;
+        this.score = 0;
+        this.streak = 0;
+        this.activeStone = null;
+        this.init();
     }
-    
-    .menu-item {
-        font-size: 0.8em;
-        padding: 0 6px;
+
+    shuffleArray(array) {
+        return array.sort(() => Math.random() - 0.5);
     }
-    
-    #question-panel {
-        top: 80px;
-        width: 90%;
-        font-size: 0.9em;
+
+    init() {
+        document.getElementById('start-btn').addEventListener('click', () => this.startGame());
+        
+        document.querySelectorAll('.ring-slot').forEach(slot => {
+            slot.addEventListener('click', e => this.handleSlotClick(e));
+        });
+
+        document.addEventListener('touchstart', e => {
+            if (e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
+    }
+
+    handleSlotClick(e) {
+        if (!this.activeStone) return;
+        
+        const slot = e.target.closest('.ring-slot');
+        const correctFinger = this.activeStone.dataset.finger;
+        const targetFinger = slot.dataset.finger;
+
+        if (correctFinger === targetFinger) {
+            this.handleCorrect(slot);
+        } else {
+            slot.classList.add('incorrect');
+            setTimeout(() => slot.classList.remove('incorrect'), 500);
+            this.handleIncorrect();
+        }
+        
+        this.activeStone.classList.remove('active');
+        this.activeStone = null;
+    }
+
+    startGame() {
+        document.getElementById('start-btn').classList.add('hidden');
+        document.getElementById('question-panel').classList.remove('hidden');
+        this.showQuestion();
+    }
+
+    showQuestion() {
+        const question = this.questions[this.currentQuestion];
+        const questionPanel = document.getElementById('current-question');
+        const symbolsContainer = document.getElementById('symbols-container');
+        
+        questionPanel.textContent = `Coloque o símbolo ${question.culture} no dedo correto: ${question.meaning}`;
+        symbolsContainer.innerHTML = '';
+
+        const stone = document.createElement('div');
+        stone.className = 'symbol-stone';
+        stone.textContent = question.symbol;
+        stone.dataset.finger = question.finger;
+        
+        stone.addEventListener('click', e => {
+            e.stopPropagation();
+            if (this.activeStone) this.activeStone.classList.remove('active');
+            this.activeStone = stone;
+            stone.classList.add('active');
+        });
+
+        symbolsContainer.appendChild(stone);
+    }
+
+    handleCorrect(slot) {
+        this.streak++;
+        const bonus = Math.min(this.streak * 20, 100);
+        this.score += 100 + bonus;
+        document.querySelector('#score span').textContent = this.score;
+        
+        document.getElementById('progress-bar').style.width = 
+            `${(this.currentQuestion / this.questions.length) * 100}%`;
+
+        slot.classList.add('correct');
+        this.activeStone?.classList.add('correct');
+
+        setTimeout(() => {
+            slot.classList.remove('correct');
+            this.activeStone?.classList.remove('correct');
+            this.currentQuestion++;
+            
+            if (this.currentQuestion < this.questions.length) {
+                this.showQuestion();
+            } else {
+                this.endGame();
+            }
+        }, 1000);
+    }
+
+    handleIncorrect() {
+        this.streak = 0;
+        this.score = Math.max(0, this.score - 50);
+        document.querySelector('#score span').textContent = this.score;
+    }
+
+    endGame() {
+        const highScore = localStorage.getItem('highScore') || 0;
+        if (this.score > highScore) {
+            localStorage.setItem('highScore', this.score);
+        }
+
+        document.getElementById('question-panel').classList.add('hidden');
+        const resultPanel = document.getElementById('result-panel');
+        resultPanel.classList.remove('hidden');
+        
+        document.getElementById('result-title').textContent = 
+            `Jornada Concluída! Pontuação Final: ${this.score}`;
+        document.getElementById('result-message').textContent = 
+            `Recorde: ${localStorage.getItem('highScore') || 0} | Sua Pontuação: ${this.score}`;
     }
 }
 
-@media (max-width: 480px) {
-    .hand-container {
-        transform: scale(1.1);
-    }
-    
-    .menu-list {
-        gap: 8px;
-    }
-    
-    .menu-item {
-        font-size: 0.7em;
-        height: 18px;
-    }
-    
-    .symbol-stone {
-        width: 45px;
-        height: 45px;
-        font-size: 1.5em;
-    }
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const game = new RingGame();
+    document.getElementById('restart-btn').addEventListener('click', () => {
+        window.location.reload();
+    });
+});
