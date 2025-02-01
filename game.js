@@ -2,60 +2,61 @@ class RingGame {
     constructor() {
         this.questions = this.shuffleArray([
             // Cultura Chinesa
-            { culture: 'Chinês', symbol: '道', finger: 'thumb', meaning: 'Tao - Caminho Espiritual' },
-            { culture: 'Chinês', symbol: '陰陽', finger: 'index', meaning: 'Equilíbrio e Dualidade' },
-            { culture: 'Chinês', symbol: '龍', finger: 'middle', meaning: 'Dragão - Poder e Sabedoria' },
-            { culture: 'Chinês', symbol: '福', finger: 'ring', meaning: 'Felicidade e Sorte' },
-            { culture: 'Chinês', symbol: '壽', finger: 'pinky', meaning: 'Longevidade e Saúde' },
-            
+            { culture: 'Chinês', symbol: '道', finger: 'polegar', meaning: 'Tao - Caminho Espiritual' },
+            { culture: 'Chinês', symbol: '陰陽', finger: 'indicador', meaning: 'Equilíbrio e Dualidade' },
+            { culture: 'Chinês', symbol: '龍', finger: 'médio', meaning: 'Dragão - Poder e Sabedoria' },
+            { culture: 'Chinês', symbol: '福', finger: 'anelar', meaning: 'Felicidade e Sorte' },
+            { culture: 'Chinês', symbol: '壽', finger: 'mindinho', meaning: 'Longevidade e Saúde' },
+
             // Cultura Nórdica
-            { culture: 'Nórdico', symbol: 'ᚦ', finger: 'thumb', meaning: 'Thurisaz - Proteção Divina' },
-            { culture: 'Nórdico', symbol: 'ᚠ', finger: 'index', meaning: 'Fehu - Riqueza e Prosperidade' },
-            { culture: 'Nórdico', symbol: 'ᛟ', finger: 'middle', meaning: 'Othala - Herança e Família' },
-            { culture: 'Nórdico', symbol: 'ᛏ', finger: 'ring', meaning: 'Tiwaz - Justiça e Coragem' },
-            { culture: 'Nórdico', symbol: 'ᚨ', finger: 'pinky', meaning: 'Ansuz - Comunicação e Sabedoria' },
-            
+            { culture: 'Nórdico', symbol: 'ᚦ', finger: 'polegar', meaning: 'Thurisaz - Proteção Divina' },
+            { culture: 'Nórdico', symbol: 'ᚠ', finger: 'indicador', meaning: 'Fehu - Riqueza e Prosperidade' },
+            { culture: 'Nórdico', symbol: 'ᛟ', finger: 'médio', meaning: 'Othala - Herança e Família' },
+            { culture: 'Nórdico', symbol: 'ᛏ', finger: 'anelar', meaning: 'Tiwaz - Justiça e Coragem' },
+            { culture: 'Nórdico', symbol: 'ᚨ', finger: 'mindinho', meaning: 'Ansuz - Comunicação e Sabedoria' },
+
             // Cultura Cigana
-            { culture: 'Cigano', symbol: '☾', finger: 'thumb', meaning: 'Lua - Intuição e Mistério' },
-            { culture: 'Cigano', symbol: '🔥', finger: 'index', meaning: 'Fogo - Paixão e Transformação' },
-            { culture: 'Cigano', symbol: '🔮', finger: 'middle', meaning: 'Cristal - Profecia e Destino' },
-            { culture: 'Cigano', symbol: '🧿', finger: 'ring', meaning: 'Olho Místico - Proteção contra o mal' },
-            { culture: 'Cigano', symbol: '🎵', finger: 'pinky', meaning: 'Música - Liberdade e Expressão' },
-            
+            { culture: 'Cigano', symbol: '☾', finger: 'polegar', meaning: 'Lua - Intuição e Mistério' },
+            { culture: 'Cigano', symbol: '🔥', finger: 'indicador', meaning: 'Fogo - Paixão e Transformação' },
+            { culture: 'Cigano', symbol: '🔮', finger: 'médio', meaning: 'Cristal - Profecia e Destino' },
+            { culture: 'Cigano', symbol: '🧿', finger: 'anelar', meaning: 'Olho Místico - Proteção contra o mal' },
+            { culture: 'Cigano', symbol: '🎵', finger: 'mindinho', meaning: 'Música - Liberdade e Expressão' },
+
             // Cultura Tibetana
-            { culture: 'Tibetano', symbol: '卍', finger: 'thumb', meaning: 'Eternidade e Harmonia' },
-            { culture: 'Tibetano', symbol: 'ॐ', finger: 'index', meaning: 'Om - Consciência Cósmica' },
-            { culture: 'Tibetano', symbol: 'ཨ', finger: 'middle', meaning: 'Sagrado A - Energia Criativa' },
-            { culture: 'Tibetano', symbol: 'ཀི', finger: 'ring', meaning: 'Kī - Poder Espiritual' },
-            { culture: 'Tibetano', symbol: 'དངོས', finger: 'pinky', meaning: 'Realidade Suprema' },
-            
+            { culture: 'Tibetano', symbol: '卍', finger: 'polegar', meaning: 'Eternidade e Harmonia' },
+            { culture: 'Tibetano', symbol: 'ॐ', finger: 'indicador', meaning: 'Om - Consciência Cósmica' },
+            { culture: 'Tibetano', symbol: 'ཨ', finger: 'médio', meaning: 'Sagrado A - Energia Criativa' },
+            { culture: 'Tibetano', symbol: 'ཀི', finger: 'anelar', meaning: 'Kī - Poder Espiritual' },
+            { culture: 'Tibetano', symbol: 'དངོས', finger: 'mindinho', meaning: 'Realidade Suprema' },
+
             // Cultura Havaiana
-            { culture: 'Havaiano', symbol: '🌋', finger: 'thumb', meaning: 'Pele - Energia Vulcânica' },
-            { culture: 'Havaiano', symbol: '🌊', finger: 'index', meaning: 'Kanaloa - Fluxo e Sabedoria' },
-            { culture: 'Havaiano', symbol: '🌿', finger: 'middle', meaning: 'Lono - Paz e Fertilidade' },
-            { culture: 'Havaiano', symbol: '🔥', finger: 'ring', meaning: 'Kāne - Força Criativa' },
-            { culture: 'Havaiano', symbol: '🌺', finger: 'pinky', meaning: 'Aloha - Amor e União' },
-            
+            { culture: 'Havaiano', symbol: '🌋', finger: 'polegar', meaning: 'Pele - Energia Vulcânica' },
+            { culture: 'Havaiano', symbol: '🌊', finger: 'indicador', meaning: 'Kanaloa - Fluxo e Sabedoria' },
+            { culture: 'Havaiano', symbol: '🌿', finger: 'médio', meaning: 'Lono - Paz e Fertilidade' },
+            { culture: 'Havaiano', symbol: '🔥', finger: 'anelar', meaning: 'Kāne - Força Criativa' },
+            { culture: 'Havaiano', symbol: '🌺', finger: 'mindinho', meaning: 'Aloha - Amor e União' },
+
             // Cultura Celta
-            { culture: 'Celta', symbol: '☘', finger: 'thumb', meaning: 'Triskelion - Movimento e Crescimento' },
-            { culture: 'Celta', symbol: '🌳', finger: 'index', meaning: 'Árvore Sagrada - Conexão com a Natureza' },
-            { culture: 'Celta', symbol: '🌀', finger: 'middle', meaning: 'Espiral - Evolução e Transformação' },
-            { culture: 'Celta', symbol: '⚔', finger: 'ring', meaning: 'Espada - Coragem e Proteção' },
-            { culture: 'Celta', symbol: '🔗', finger: 'pinky', meaning: 'Nós Celtas - Laços e Destino' },
-            
+            { culture: 'Celta', symbol: '☘', finger: 'polegar', meaning: 'Triskelion - Movimento e Crescimento' },
+            { culture: 'Celta', symbol: '🌳', finger: 'indicador', meaning: 'Árvore Sagrada - Conexão com a Natureza' },
+            { culture: 'Celta', symbol: '🌀', finger: 'médio', meaning: 'Espiral - Evolução e Transformação' },
+            { culture: 'Celta', symbol: '⚔', finger: 'anelar', meaning: 'Espada - Coragem e Proteção' },
+            { culture: 'Celta', symbol: '🔗', finger: 'mindinho', meaning: 'Nós Celtas - Laços e Destino' },
+
             // Cultura Egípcia
-            { culture: 'Egípcio', symbol: '𓂀', finger: 'thumb', meaning: 'Olho de Hórus - Proteção e Visão' },
-            { culture: 'Egípcio', symbol: '𓆣', finger: 'index', meaning: 'Ankh - Vida e Imortalidade' },
-            { culture: 'Egípcio', symbol: '𓏏', finger: 'middle', meaning: 'Djed - Estabilidade e Força' },
-            { culture: 'Egípcio', symbol: '𓂻', finger: 'ring', meaning: 'Escaravelho - Renascimento e Transformação' },
-            { culture: 'Egípcio', symbol: '𓃭', finger: 'pinky', meaning: 'Leão - Poder e Liderança' },
-            
+            { culture: 'Egípcio', symbol: '𓂀', finger: 'polegar', meaning: 'Olho de Hórus - Proteção e Visão' },
+            { culture: 'Egípcio', symbol: '𓆣', finger: 'indicador', meaning: 'Ankh - Vida e Imortalidade' },
+            { culture: 'Egípcio', symbol: '𓏏', finger: 'médio', meaning: 'Djed - Estabilidade e Força' },
+            { culture: 'Egípcio', symbol: '𓂻', finger: 'anelar', meaning: 'Escaravelho - Renascimento e Transformação' },
+            { culture: 'Egípcio', symbol: '𓃭', finger: 'mindinho', meaning: 'Leão - Poder e Liderança' },
+
             // Cultura Grega
-            { culture: 'Grego', symbol: 'Δ', finger: 'thumb', meaning: 'Delta - Mudança e Evolução' },
-            { culture: 'Grego', symbol: 'Ω', finger: 'index', meaning: 'Ômega - Plenitude e Fim' },
-            { culture: 'Grego', symbol: '🏛', finger: 'middle', meaning: 'Coluna - Estrutura e Conhecimento' },
-            { culture: 'Grego', symbol: '⚖', finger: 'ring', meaning: 'Balança - Justiça e Equilíbrio' },
-            { culture: 'Grego', symbol: '🔥', finger: 'pinky', meaning: 'Fogo Olímpico - Espírito e Determinação' }
+            { culture: 'Grego', symbol: 'Δ', finger: 'polegar', meaning: 'Delta - Mudança e Evolução' },
+            { culture: 'Grego', symbol: 'Ω', finger: 'indicador', meaning: 'Ômega - Plenitude e Fim' },
+            { culture: 'Grego', symbol: '🏛', finger: 'médio', meaning: 'Coluna - Estrutura e Conhecimento' },
+            { culture: 'Grego', symbol: '⚖', finger: 'anelar', meaning: 'Balança - Justiça e Equilíbrio' },
+            { culture: 'Grego', symbol: '🔥', finger: 'mindinho', meaning: 'Fogo Olímpico - Espírito e Determinação' }
+
         ]);
 
         this.currentQuestion = 0;
