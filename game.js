@@ -1,6 +1,6 @@
 class RingGame {
     constructor() {
-        this.questions = this.shuffleArray([
+        this.questions = this.fisherYatesShuffle([
             // Cultura Chinesa
             { culture: 'Chinês', symbol: '道', finger: 'polegar', meaning: 'Tao - Caminho Espiritual' },
             { culture: 'Chinês', symbol: '陰陽', finger: 'indicador', meaning: 'Equilíbrio e Dualidade' },
@@ -56,7 +56,6 @@ class RingGame {
             { culture: 'Grego', symbol: '🏛', finger: 'médio', meaning: 'Coluna - Estrutura e Conhecimento' },
             { culture: 'Grego', symbol: '⚖', finger: 'anelar', meaning: 'Balança - Justiça e Equilíbrio' },
             { culture: 'Grego', symbol: '🔥', finger: 'mindinho', meaning: 'Fogo Olímpico - Espírito e Determinação' }
-
         ]);
 
         this.currentQuestion = 0;
@@ -66,8 +65,12 @@ class RingGame {
         this.init();
     }
 
-    shuffleArray(array) {
-        return array.sort(() => Math.random() - 0.5);
+    fisherYatesShuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     init() {
@@ -136,12 +139,16 @@ class RingGame {
         this.score += 100 + bonus;
         document.querySelector('#score span').textContent = this.score;
         
-        document.getElementById('progress-bar').style.width = 
-            `${(this.currentQuestion / this.questions.length) * 100}%`;
-
+        // Atualização segura da barra de progresso
+        const progressBar = document.getElementById('progress-bar');
+        if(progressBar) {
+            progressBar.style.width = 
+                `${((this.currentQuestion + 1) / this.questions.length) * 100}%`;
+        }
+    
         slot.classList.add('correct');
         this.activeStone?.classList.add('correct');
-
+    
         setTimeout(() => {
             slot.classList.remove('correct');
             this.activeStone?.classList.remove('correct');
@@ -154,7 +161,6 @@ class RingGame {
             }
         }, 1000);
     }
-
     handleIncorrect() {
         this.streak = 0;
         this.score = Math.max(0, this.score - 50);
