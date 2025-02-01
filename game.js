@@ -73,9 +73,7 @@ class RingGame {
         document.getElementById('start-btn').addEventListener('click', () => this.startGame());
         
         document.querySelectorAll('.ring-slot').forEach(slot => {
-            slot.addEventListener('dragover', e => e.preventDefault());
-            slot.addEventListener('drop', e => this.handleDrop(e));
-            slot.addEventListener('touchstart', e => this.handleTouchPlace(e));
+            slot.addEventListener('click', e => this.handleSlotClick(e));
         });
 
         document.addEventListener('touchstart', e => {
@@ -83,10 +81,9 @@ class RingGame {
         }, { passive: false });
     }
 
-    handleTouchPlace(e) {
-        e.preventDefault();
+    handleSlotClick(e) {
         if (!this.activeStone) return;
-
+        
         const slot = e.target.closest('.ring-slot');
         const correctFinger = this.activeStone.dataset.finger;
         const targetFinger = slot.dataset.finger;
@@ -120,45 +117,16 @@ class RingGame {
         const stone = document.createElement('div');
         stone.className = 'symbol-stone';
         stone.textContent = question.symbol;
-        stone.draggable = true;
         stone.dataset.finger = question.finger;
         
-        stone.addEventListener('dragstart', e => {
-            e.dataTransfer.setData('text/plain', question.finger);
-        });
-
-        stone.addEventListener('touchstart', e => {
-            e.preventDefault();
+        stone.addEventListener('click', e => {
+            e.stopPropagation();
             if (this.activeStone) this.activeStone.classList.remove('active');
             this.activeStone = stone;
             stone.classList.add('active');
         });
 
         symbolsContainer.appendChild(stone);
-        symbolsContainer.addEventListener('touchmove', e => this.handleTouchMove(e));
-        symbolsContainer.addEventListener('touchend', () => this.activeStone = null);
-    }
-
-    handleTouchMove(e) {
-        if (!this.activeStone) return;
-        const touch = e.touches[0];
-        this.activeStone.style.position = 'absolute';
-        this.activeStone.style.left = `${touch.clientX - 25}px`;
-        this.activeStone.style.top = `${touch.clientY - 25}px`;
-    }
-
-    handleDrop(e) {
-        e.preventDefault();
-        const correctFinger = e.dataTransfer.getData('text/plain');
-        const targetFinger = e.target.closest('.ring-slot').dataset.finger;
-
-        if (correctFinger === targetFinger) {
-            this.handleCorrect(e.target.closest('.ring-slot'));
-        } else {
-            e.target.closest('.ring-slot').classList.add('incorrect');
-            setTimeout(() => e.target.closest('.ring-slot').classList.remove('incorrect'), 500);
-            this.handleIncorrect();
-        }
     }
 
     handleCorrect(slot) {
