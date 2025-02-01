@@ -209,6 +209,17 @@ body {
     display: none;
 }
 
+.current-symbol {
+    font-size: 2.5em;
+    display: inline-block;
+    margin: 10px 0;
+    text-shadow: 0 0 15px var(--secondary-color);
+}
+
+#question-panel {
+    min-height: 120px;
+}
+
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
